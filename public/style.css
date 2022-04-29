@@ -1,0 +1,175 @@
+.header-image-container img {
+  height: 140px;
+  width: 200px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+
+header {
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  position: relative;
+}
+
+header a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+h1.site-title {
+  font-family: "Roboto Slab", serif;
+  font-size: 80px;
+  font-weight: 900;
+  margin: 0 0 0 20px;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  /* background-color: #faf9f6; */
+}
+
+.content {
+  display: flex;
+}
+
+.player-streak {
+  text-decoration: none;
+  color: black;
+  font-size: 40px;
+  padding-left: 80px;
+}
+
+.sidebar-content {
+  display: inline-block;
+}
+
+.streak-container {
+  min-width: 200px;
+  max-width: 200px;
+  margin: 10px 10px auto 10px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #ff4b4b;
+}
+
+.leaderboard-container {
+  min-width: 200px;
+  max-width: 200px;
+  margin: 10px 10px auto 10px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #ff4b4b;
+}
+
+.youtuber-image-container img {
+  max-width: 250px;
+  max-height: 250px;
+  padding-left: 50px;
+}
+
+#youtuber-1 {
+  display: inline-block;
+  vertical-align: top;
+  height: 400px;
+  width: 400px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 3px;
+}
+
+#youtuber-2 {
+  display: inline-block;
+  vertical-align: top;
+  height: 400px;
+  width: 400px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #000000;
+  border-radius: 3px;
+}
+
+.hidden {
+  display: none;
+}
+
+#game-over-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1010;
+  overflow: scroll;
+}
+
+.modal-dialog {
+  width: auto;
+  max-width: 600px;
+  min-width: 350px;
+  min-height: 300px;
+  margin: 40px auto;
+  background-color: rgb(71, 71, 71);
+  border-radius: 15px;
+}
+
+.modal-header {
+  position: relative;
+  padding: 10px 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+#modal-close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 24px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px 20px 10px;
+}
+
+#modal-play-again {
+  margin-right: 20px;
+  color: #333;
+  background-color: #fff;
+}
+
+#modal-play-again:hover {
+  background-color: rgb(255, 68, 68);
+  cursor: pointer;
+}
+
+.action-button {
+  font-size: 20px;
+  color: white;
+  padding: 10px;
+  background-color: rgb(248, 54, 54);
+  border: 1px solid #ababab;
+  border-radius: 5px;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background-color: rgb(247, 86, 86);
+}

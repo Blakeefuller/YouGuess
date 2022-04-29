@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>YouGuess</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="index.js" charset="utf-8" defer></script>
+  </head>
+  <body>
+
+    <header>
+
+      <div class="header-image-container">
+        <img src="youguessLogo.png" alt="YouGuess logo">
+      </div>
+
+      <h1 class="site-title"><a href="#">YouGuess</a></h1>
+
+    </header>
+
+    <main class="content">
+      <div class="sidebar-content">
+        <aside class="streak-container">
+          <h2>Score</h2>
+  
+          <div class="player-streak-container">
+            <a href='#' class='player-streak'>0</a>
+          </div>
+  
+        </aside>
+  
+        <aside class="leaderboard-container">
+          <h2>Leaderboard</h2>
+  
+          <div class="leaderboard-data-container">
+            
+          </div>
+  
+        </aside>
+      </div>
+
+      <section id="guess-section">
+
+        <div class='youtuber' id="youtuber-1" subCount=>
+            <div class="youtuber-1-contents">
+              <div class="youtuber-image-container">
+                <img src="" alt="youtuber-img">
+              </div>
+              <div class="youtuber-info-container">
+                <p class="youtuber-1-name"></p>
+              </div>
+            </div>
+            <button type="button" id="youtuber-1-button" class="action-button"><i class="fab fa-youtube"></i></button>
+            <p id="youtuber-1-subs"></p>
+          </div>
+
+          <div class='youtuber' id="youtuber-2" subCount=>
+            <div class="youtuber-2-contents">
+              <div class="youtuber-image-container">
+                <img src="" alt="youtuber-img">
+              </div>
+              <div class="youtuber-info-container">
+                <p class="youtuber-2-name"></p>
+              </div>
+            </div>
+            <button type="button" id="youtuber-2-button" class="action-button"><i class="fab fa-youtube"></i></button>
+            <p id="youtuber-2-subs"></p>
+          </div>
+
+          
+      </section>
+
+    </main>
+
+    <div id="game-over-modal" class='hidden'>
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>Game Over</h3>
+          <button type="button" id="modal-close" class="modal-hide-button">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <h3>Score</h3>
+          <a href='#' class='player-streak'>0</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="modal-play-again" class="action-button">Play Again</button>
+      </div>
+    </div>
+
+  </body>
+</html>
