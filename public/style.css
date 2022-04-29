@@ -56,6 +56,15 @@ body {
   background-color: #ff4b4b;
 }
 
+.leaderboard-container {
+  min-width: 200px;
+  max-width: 200px;
+  margin: 10px 10px auto 10px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #ff4b4b;
+}
+
 .items-container {
   min-width: 200px;
   max-width: 200px;
