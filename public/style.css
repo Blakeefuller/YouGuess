@@ -57,7 +57,25 @@ body {
   font-size: 40px;
 }
 
-.leaderboard-container {
+.items-container {
+  min-width: 200px;
+  max-width: 200px;
+  margin: 10px 10px auto 10px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #ff4b4b;
+}
+
+.friendlist-container {
+  min-width: 200px;
+  max-width: 200px;
+  margin: 10px 10px auto 10px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #ff4b4b;
+}
+
+.-container {
   min-width: 200px;
   max-width: 200px;
   margin: 10px 10px auto 10px;
