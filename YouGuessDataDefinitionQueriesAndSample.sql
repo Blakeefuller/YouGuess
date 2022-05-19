@@ -19,9 +19,6 @@
 -- Table structure for table `YouTube_Channels`
 --
 
-DROP TABLE IF EXISTS `YouTube_Channels`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `YouTube_Channels` (
   `channelID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -29,18 +26,11 @@ CREATE TABLE `YouTube_Channels` (
   `channelPhotoUrl` varchar(255) NOT NULL
   PRIMARY KEY (`channelID`)
 ) ENGINE=InnoDB 
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `YouTube_Channels`
---
 
-LOCK TABLES `YouTube_Channels` WRITE;
-/*!40000 ALTER TABLE `YouTube_Channels` DISABLE KEYS */;
 INSERT INTO `YouTube_Channels` (`channelID`, `name`, `numSubscribers`, `channelPhotoUrl`) VALUES (0, 'SyKe', 16, 'https://yt3.ggpht.com/ytc/AKedOLTvs0ScA2dRb2zjwR6fPdCLgAwKTVIiOlLLjfzBTg=s88-c-k-c0x00ffffff-no-rj');
 INSERT INTO `YouTube_Channels` (`channelID`, `name`, `numSubscribers`, `channelPhotoUrl`) VALUES (1, 'PewDiePie', 111000000, 'https://yt3.ggpht.com/5oUY3tashyxfqsjO5SGhjT4dus8FkN9CsAHwXWISFrdPYii1FudD4ICtLfuCw6-THJsJbgoY=s88-c-k-c0x00ffffff-no-rj');
-/*!40000 ALTER TABLE `YouTube_Channels` ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table `YouTube_Videos`
