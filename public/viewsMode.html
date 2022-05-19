@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <script src="index.js" charset="utf-8" defer></script>
+    <script src="viewsMode.js" charset="utf-8" defer></script>
   </head>
   <body>
 
@@ -23,7 +23,7 @@
       <h1 class="site-title"><a href="index.html">YouGuess</a></h1>
 
       <h3 class="gamemode-option"><a href="index.html">Subscribers Game</a></h3>
-      <h3 class="gamemode-option"><a href="index.html">Likes Game</a></h3>
+      <h3 class="gamemode-option"><a href="viewsMode.html">Views Game</a></h3>
 
     </header>
 
@@ -55,26 +55,30 @@
 
       <section id="guess-section">
 
-        <div class='youtuber' id="youtuber-1" subCount=>
-            <div class="youtuber-1-contents">
-              <div class="youtuber-image-container">
+        <div class='video' id="video-1" subCount=>
+            <div class="video-1-contents">
+              <div class="video-image-container">
+                <img src="" alt="video-img">
               </div>
-              <div class="youtuber-info-container">
-                <p class="youtuber-1-name"></p>
+              <div class="video-info-container">
+                <p class="video-1-name"></p>
               </div>
             </div>
-            <p id="youtuber-1-subs"></p>
+            <button type="button" id="video-1-button" class="action-button"><i class="fab fa-youtube"></i></button>
+            <p id="video-1-views"></p>
           </div>
 
-          <div class='youtuber' id="youtuber-2" subCount=>
-            <div class="youtuber-2-contents">
-              <div class="youtuber-image-container">
+          <div class='video' id="video-2" subCount=>
+            <div class="video-2-contents">
+              <div class="video-image-container">
+                <img src="" alt="video-img">
               </div>
-              <div class="youtuber-info-container">
-                <p class="youtuber-2-name"></p>
+              <div class="video-info-container">
+                <p class="video-2-name"></p>
               </div>
             </div>
-            <p id="youtuber-2-subs"></p>
+            <button type="button" id="video-2-button" class="action-button"><i class="fab fa-youtube"></i></button>
+            <p id="video-2-views"></p>
           </div>
 
           

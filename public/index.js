@@ -13,8 +13,7 @@ function getLeaderboardData() {
   request.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       jsonObj = JSON.parse(this.responseText);
-      leaderboardArray = jsonObj["leaderboard"];
-      leaderboardArray.sort((a, b) => b - a);
+      leaderboardArray = jsonObj;
 
       console.log(jsonObj["leaderboard"]);
 
@@ -74,38 +73,51 @@ function replaceYoutuber(channelsArray, youtuberNum) {
   }
 }
 
-function newYoutubers(channelsArray) {
+function newYoutubers() {
   console.log("== Getting new YouTubers now.");
-  channelOne = getRandYoutuber(channelsArray);
-  channelTwo = getRandYoutuber(channelsArray);
+  var request = new XMLHttpRequest();
 
-  imageContainers = document.getElementsByClassName("youtuber-image-container");
-  infoContainers = document.getElementsByClassName("youtuber-info-container");
+  request.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      jsonObj = JSON.parse(this.responseText);
+      channelOne = jsonObj[0];
+      channelTwo = jsonObj[1];
 
-  console.log("== channelOne: ", channelOne);
-  console.log("== channelTwo: ", channelTwo);
+      imageContainers = document.getElementsByClassName(
+        "youtuber-image-container"
+      );
+      infoContainers = document.getElementsByClassName(
+        "youtuber-info-container"
+      );
 
-  imageOne = imageContainers[0].getElementsByTagName("img")[0]; // Get thumbnail, thumbnails are squares (800 x 800) but someone should really set a max height and width on them
-  imageOne.src = channelOne.thumbnail;
-  infoOne = infoContainers[0].getElementsByTagName("p")[0]; // Get Youtuber name
-  infoOne.textContent = channelOne.name;
-  subscribersOne = channelOne.subscribers;
-  document.getElementById("youtuber-1-subs").innerText = "";
+      imageOne = imageContainers[0].getElementsByTagName("img")[0]; // Get thumbnail, thumbnails are squares (800 x 800) but someone should really set a max height and width on them
+      imageOne.src = channelOne.channelPhotoUrl;
+      infoOne = infoContainers[0].getElementsByTagName("p")[0]; // Get Youtuber name
+      infoOne.textContent = channelOne.name;
+      subscribersOne = channelOne.numSubscribers;
+      document.getElementById("youtuber-1-subs").innerText = "";
 
-  imageTwo = imageContainers[1].getElementsByTagName("img")[0]; // Get thumbnail
-  imageTwo.src = channelTwo.thumbnail;
-  infoTwo = infoContainers[1].getElementsByTagName("p")[0]; // Get Youtuber name
-  infoTwo.textContent = channelTwo.name;
-  subscribersTwo = channelTwo.subscribers;
-  document.getElementById("youtuber-2-subs").innerText = "";
+      imageTwo = imageContainers[1].getElementsByTagName("img")[0]; // Get thumbnail
+      imageTwo.src = channelTwo.channelPhotoUrl;
+      infoTwo = infoContainers[1].getElementsByTagName("p")[0]; // Get Youtuber name
+      infoTwo.textContent = channelTwo.name;
+      subscribersTwo = channelTwo.numSubscribers;
+      document.getElementById("youtuber-2-subs").innerText = "";
+    }
+  };
+
+  request.open("GET", "/getYoutubeChannels");
+  request.send();
 }
 
-fetch("youtubeChannels.json")
-  .then((res) => res.json())
-  .then((json) => (channelsArray = json))
-  .then(function (channelsArray) {
-    newYoutubers(channelsArray); // Start the game by getting new YouTubers
-  });
+// fetch("youtubeChannels.json")
+//   .then((res) => res.json())
+//   .then((json) => (channelsArray = json))
+//   .then(function (channelsArray) {
+//     newYoutubers(channelsArray); // Start the game by getting new YouTubers
+//   });
+
+newYoutubers();
 
 //game over modal stuff
 var modal = document.getElementById("game-over-modal");

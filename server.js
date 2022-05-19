@@ -9,7 +9,6 @@ var youtubeChannels = require("./public/youtubeChannels.json");
     SETUP
 */
 // Express
-var express = require("express"); // We are using the express library for the web server
 var app = express(); // We need to instantiate an express object to interact with the server in our code
 app.use(express.json());
 app.use(bodyParser.text());
@@ -17,7 +16,7 @@ app.use(express.static("public"));
 PORT = 65234; // Set a port number at the top so it's easy to change in the future
 
 // Database
-var db = require("./db-connector");
+var db = require("./public/db-connector.js");
 
 /*
     LISTENER
@@ -34,6 +33,61 @@ app.listen(PORT, function () {
 /*
     ROUTES
 */
+
+app.get("/getLeaderboardData", function (req, res) {
+  console.log("== GET request recieved");
+
+  query = "SELECT highScore FROM High_Scores ORDER BY highScore DESC LIMIT 10;";
+
+  db.pool.query(query, function (err, results, fields) {
+    if (!err) {
+      const result = Object.values(JSON.parse(JSON.stringify(results)));
+
+      let scores = [];
+      for (let i = 0; i < result.length; i++) {
+        scores[i] = result[i].highScore;
+      }
+
+      res.status(200).send(JSON.stringify(scores));
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
+
+app.get("/getYoutubeChannels", function (req, res) {
+  console.log("== GET request recieved");
+
+  query = "SELECT * FROM YouTube_Channels ORDER BY RAND() LIMIT 2;";
+
+  db.pool.query(query, function (err, results, fields) {
+    if (!err) {
+      const result = Object.values(JSON.parse(JSON.stringify(results)));
+
+      res.status(200).send(result);
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
+
+app.get("/getYoutubeVideos", function (req, res) {
+  console.log("== GET request recieved");
+
+  query = "SELECT * FROM YouTube_Videos ORDER BY RAND() LIMIT 2;";
+
+  db.pool.query(query, function (err, results, fields) {
+    if (!err) {
+      const result = Object.values(JSON.parse(JSON.stringify(results)));
+      console.log(result);
+
+      res.status(200).send(result);
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
+
 app.get("/", function (req, res) {
   // Define our queries
   query1 = "DROP TABLE IF EXISTS diagnostic;";
@@ -102,20 +156,6 @@ app.get("/", function (req, res) {
 //       } else {
 //         db.close();
 //       }
-//     });
-//   });
-// });
-
-// app.get("/getLeaderboardData", function (req, res) {
-//   console.log("== GET request recieved");
-
-//   MongoClient.connect(url, function (err, db) {
-//     if (err) throw err;
-//     var dbo = db.db("CS290-Final-Project");
-//     dbo.collection("data").findOne({}, function (err, result) {
-//       if (err) throw err;
-
-//       res.send(result);
 //     });
 //   });
 // });

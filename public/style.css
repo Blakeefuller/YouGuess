@@ -97,13 +97,15 @@ body {
   background-color: #ff4b4b;
 }
 
-.youtuber-image-container img {
+.youtuber-image-container,
+.video-image-container img {
   max-width: 250px;
   max-height: 250px;
   padding-left: 50px;
 }
 
-#youtuber-1 {
+#youtuber-1,
+#video-1 {
   display: inline-block;
   vertical-align: top;
   height: 400px;
@@ -114,7 +116,8 @@ body {
   border-radius: 3px;
 }
 
-#youtuber-2 {
+#youtuber-2,
+#video-2 {
   display: inline-block;
   vertical-align: top;
   height: 400px;
