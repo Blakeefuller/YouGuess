@@ -13,7 +13,7 @@ var app = express(); // We need to instantiate an express object to interact wit
 app.use(express.json());
 app.use(bodyParser.text());
 app.use(express.static("public"));
-PORT = 65234; // Set a port number at the top so it's easy to change in the future
+PORT = 65334; // Set a port number at the top so it's easy to change in the future
 
 // Database
 var db = require("./public/db-connector.js");
