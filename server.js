@@ -88,6 +88,23 @@ app.get("/getYoutubeVideos", function (req, res) {
   });
 });
 
+app.get("/getItems", function (req, res, userID) {
+  console.log("== GET request recieved");
+
+  //FIXME: use user ID for query
+  // query = "SELECT skipQuantity, reviveQuantity FROM Items_List WHERE userID=;";
+
+  db.pool.query(query, function (err, results, fields) {
+    if (!err) {
+      const result = Object.values(JSON.parse(JSON.stringify(results)));
+
+      res.status(200).send(JSON.stringify(result));
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
+
 app.get("/", function (req, res) {
   // Define our queries
   query1 = "DROP TABLE IF EXISTS diagnostic;";
