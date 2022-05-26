@@ -84,7 +84,7 @@ INSERT INTO High_Scores (`highScore`, `gameMode`, `userID`) VALUES (8, 'subscrib
 --
 
 CREATE TABLE Friends_List (
-    `userID` int(11) NOT NULL PRIMARY KEY,
+    `userID` int(11) NOT NULL,
     `friendID` int(11) UNIQUE NOT NULL,
     FOREIGN KEY(`userID`) REFERENCES Users (`userID`),
     FOREIGN KEY(`friendID`) REFERENCES Users (`userID`)
