@@ -13,6 +13,13 @@ function getFriends(userID) {
       for (var i = 0; i < friends.length; i++) {
         var item = document.createElement("li");
         item.appendChild(document.createTextNode(friends[i]["username"]));
+
+        const buttonElem = item.appendChild(document.createElement("button"));
+        buttonElem.innerText = "delete";
+        buttonElem.onclick = function () {
+          // remove list item here
+        };
+
         list.appendChild(item);
       }
 
