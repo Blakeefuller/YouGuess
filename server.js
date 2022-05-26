@@ -13,7 +13,7 @@ var app = express(); // We need to instantiate an express object to interact wit
 app.use(express.json());
 app.use(bodyParser.text());
 app.use(express.static("public"));
-PORT = 65334; // Set a port number at the top so it's easy to change in the future
+PORT = 62334; // Set a port number at the top so it's easy to change in the future
 
 // Database
 var db = require("./public/db-connector.js");
@@ -82,6 +82,27 @@ app.get("/getYoutubeVideos", function (req, res) {
       console.log(result);
 
       res.status(200).send(result);
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
+
+app.get("/getFriends", function (req, res) {
+  console.log("== GET request recieved");
+  userID = req.query.userID;
+  userID = userID.toString();
+
+  query =
+    "SELECT Users.username FROM Users JOIN Friends_List ON Friends_List.friendID = Users.userID WHERE Friends_List.userID=" +
+    userID +
+    ";";
+
+  db.pool.query(query, function (err, results, fields) {
+    if (!err) {
+      const result = Object.values(JSON.parse(JSON.stringify(results)));
+
+      res.status(200).send(JSON.stringify(result));
     } else {
       res.status(500).send("Error storing in database.");
     }
