@@ -5,7 +5,8 @@
 
 -- modifies friends table
 INSERT INTO Friends_List ('friendID') VALUES (:friendIDInput) WHERE `userID`= :userIDReference
-DELETE FROM Friends_List WHERE `friendID`= :friendIDReference AND `userID`= :userIDReference
+DELETE FROM Friends_List WHERE friendID= (SELECT userID FROM Users WHERE username= "friendUsernameReference") AND userID = usernameReference;
+--DELETE FROM Friends_List WHERE `friendID`= :friendIDReference AND `userID`= :userIDReference
 
 -- modifies items table
 INSERT INTO Items_List (skipQuantity, reviveQuantity, userID) VALUES (:skipQuantity, :reviveQuantity, :userIDReference)

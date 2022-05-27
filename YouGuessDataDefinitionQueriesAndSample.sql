@@ -55,7 +55,7 @@ CREATE TABLE Users (
     `userID` int(11) UNIQUE NOT NULL AUTO_INCREMENT,
     `email` VARCHAR(255) NOT NULL,
     `password` varchar(256) NOT NULL,
-    `username` varchar(32) NOT NULL,
+    `username` varchar(32) UNIQUE NOT NULL,
     PRIMARY KEY(`userID`) 
 ) ENGINE=INNODB;
 
