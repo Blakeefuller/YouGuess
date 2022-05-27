@@ -16,8 +16,13 @@ function getFriends(userID) {
 
         const buttonElem = item.appendChild(document.createElement("button"));
         buttonElem.innerText = "delete";
+        buttonElem.value = friends[i]["username"];
         buttonElem.onclick = function () {
-          // remove list item here
+          request.open(
+            "DELETE",
+            "/deleteFriend?userID=" + userID + "&friendName=" + buttonElem.value
+          );
+          request.send();
         };
 
         list.appendChild(item);
@@ -31,7 +36,7 @@ function getFriends(userID) {
   request.send();
 }
 
-function getItems() {
+function getItems(userID) {
   var itemsContainer = document.getElementsByClassName("Items-data-container");
 
   var request = new XMLHttpRequest();
@@ -39,24 +44,29 @@ function getItems() {
   request.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       jsonObj = JSON.parse(this.responseText);
-      items = jsonObj;
+      items = jsonObj[0];
 
       console.log(items);
 
-      //   var list = document.createElement("ol");
-      //   for (var i = 0; i < leaderboardArray.length; i++) {
-      //     var item = document.createElement("li");
-      //     item.appendChild(document.createTextNode(leaderboardArray[i]));
-      //     list.appendChild(item);
-      //   }
+      var list = document.createElement("ul");
+      for (var key in items) {
+        var item = document.createElement("li");
+        var text = key + ": " + items[key];
+        item.appendChild(document.createTextNode(text));
 
-      //   leaderboardContainer[0].appendChild(list);
+        const inputElem = item.appendChild(document.createElement("input"));
+        inputElem.placeholder = "Updated value";
+
+        list.appendChild(item);
+      }
+
+      itemsContainer[0].appendChild(list);
     }
   };
 
-  request.open("GET", "/getFriends", 0);
+  request.open("GET", "/getItems?userID=" + userID, 0);
   request.send();
 }
 
 getFriends(0);
-// getItems();
+getItems(0);
