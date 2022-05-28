@@ -46,8 +46,6 @@ function getItems(userID) {
       jsonObj = JSON.parse(this.responseText);
       items = jsonObj[0];
 
-      console.log(items);
-
       var list = document.createElement("ul");
       for (var key in items) {
         var item = document.createElement("li");
@@ -56,6 +54,7 @@ function getItems(userID) {
 
         const inputElem = item.appendChild(document.createElement("input"));
         inputElem.placeholder = "Updated value";
+        inputElem.className = "inputField";
 
         list.appendChild(item);
       }
@@ -65,6 +64,23 @@ function getItems(userID) {
   };
 
   request.open("GET", "/getItems?userID=" + userID, 0);
+  request.send();
+}
+
+function updateItems() {
+  var itemsContainer = document.getElementsByClassName("Items-data-container");
+  var list = itemsContainer[0].getElementsByTagName("li");
+  var skipQuantity = list[0].getElementsByClassName("inputField")[0].value;
+  var reviveQuantity = list[1].getElementsByClassName("inputField")[0].value;
+
+  var request = new XMLHttpRequest();
+  request.open(
+    "PUT",
+    "/updateItems?skipQuantity=" +
+      skipQuantity +
+      "&reviveQuantity=" +
+      reviveQuantity
+  );
   request.send();
 }
 

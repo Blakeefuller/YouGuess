@@ -132,31 +132,64 @@ app.get("/getItems", function (req, res) {
 });
 
 app.delete("/deleteFriend", function (req, res) {
-  var mysql = req.app.get("mysql");
-
   friendName = req.query.friendName;
 
   userID = req.query.userID;
   userID = userID.toString();
 
-  // var sql =
-  //   "DELETE FROM Friends_List WHERE friendID=" +
-  //   friendID +
-  //   "friendReference AND userID=" +
-  //   userID +
-  //   ";";
+  var query =
+    "DELETE FROM Friends_List WHERE friendID=(SELECT userID FROM Users WHERE username='" +
+    friendName +
+    "') AND userID=" +
+    userID +
+    ";";
 
-  // var inserts = [req.params.id];
-  // sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-  //   if (error) {
-  //     console.log(error);
-  //     res.write(JSON.stringify(error));
-  //     res.status(400);
-  //     res.end();
-  //   } else {
-  //     res.status(202).end();
-  //   }
-  // });
+  db.pool.query(query, function (err, results, fields) {
+    if (!err) {
+      res.status(200);
+      res.end();
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
+
+app.put("/updateItems", function (req, res) {
+  skipQuantity = req.query.skipQuantity;
+  reviveQuantity = req.query.reviveQuantity;
+
+  if (parseInt(skipQuantity) > 0 && parseInt(reviveQuantity) > 0) {
+    var query1 =
+      "UPDATE Items_List SET skipQuantity=" +
+      skipQuantity +
+      " WHERE userID=" +
+      "0" +
+      ";";
+    var query2 =
+      "UPDATE Items_List SET reviveQuantity=" +
+      reviveQuantity +
+      " WHERE userID=" +
+      "0" +
+      ";";
+
+    db.pool.query(query1, function (err, results, fields) {
+      if (!err) {
+        res.status(200);
+        res.end();
+      } else {
+        res.status(500).send("Error storing in database.");
+      }
+    });
+
+    db.pool.query(query2, function (err, results, fields) {
+      if (!err) {
+        res.status(200);
+        res.end();
+      } else {
+        res.status(500).send("Error storing in database.");
+      }
+    });
+  }
 });
 
 app.get("/", function (req, res) {
