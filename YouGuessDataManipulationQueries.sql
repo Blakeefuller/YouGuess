@@ -16,6 +16,7 @@ UPDATE Items_List SET skipQuantity = 0
 UPDATE Items_List SET reviveQuantity += 1
 UPDATE Items_List SET reviveQuantity -= 1 where reviveQuantity > 0
 UPDATE Items_List SET reviveQuantity = 0
+UPDATE Items_List SET reviveQuantity or skipQuantity = quantityReference WHERE userID=userIDReference;
 
 -- modifies high scores table
 INSERT INTO High_Scores (highScore, gameMode, userID) VALUES (:highScoreInput, :gameModeInput, :userIDReference)
