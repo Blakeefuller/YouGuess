@@ -192,6 +192,31 @@ app.put("/updateItems", function (req, res) {
   }
 });
 
+app.post("/addFriend", function (req, res) {
+  console.log("== POST request recieved");
+
+  friendName = req.query.friendName;
+
+  userID = req.query.userID;
+  userID = userID.toString();
+
+  query =
+    "INSERT INTO Friends_List (userID, friendID) VALUES (" +
+    userID +
+    ", (SELECT userID FROM Users WHERE username= '" +
+    friendName +
+    "'));";
+
+  db.pool.query(query, function (err, results, fields) {
+    if (!err) {
+      res.status(200);
+      res.end();
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
+
 app.get("/", function (req, res) {
   // Define our queries
   query1 = "DROP TABLE IF EXISTS diagnostic;";
