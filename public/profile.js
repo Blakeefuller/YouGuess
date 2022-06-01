@@ -84,5 +84,17 @@ function updateItems() {
   request.send();
 }
 
+function addFriend() {
+  var addFriendsContainer = document.getElementsByClassName(
+    "addFriends-container"
+  );
+  var usernameToAdd =
+    addFriendsContainer[0].getElementsByTagName("input")[0].value;
+
+  var request = new XMLHttpRequest();
+  request.open("POST", "/addFriend?userID=0" + "&friendName=" + usernameToAdd);
+  request.send();
+}
+
 getFriends(0);
 getItems(0);
