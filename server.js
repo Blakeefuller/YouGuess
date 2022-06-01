@@ -36,8 +36,12 @@ app.listen(PORT, function () {
 
 app.get("/getLeaderboardData", function (req, res) {
   console.log("== GET request recieved");
+  gamemode = req.query.gamemode;
 
-  query = "SELECT highScore FROM High_Scores ORDER BY highScore DESC LIMIT 10;";
+  query =
+    "SELECT highScore FROM High_Scores WHERE gameMode='" +
+    gamemode +
+    "' ORDER BY highScore DESC LIMIT 10;";
 
   db.pool.query(query, function (err, results, fields) {
     if (!err) {
@@ -58,7 +62,7 @@ app.get("/getLeaderboardData", function (req, res) {
 app.get("/getYoutubeChannels", function (req, res) {
   console.log("== GET request recieved");
 
-  query = "SELECT * FROM YouTube_Channels ORDER BY RAND() LIMIT 2;";
+  query = "SELECT * FROM YouTube_Channels ORDER BY RAND();";
 
   db.pool.query(query, function (err, results, fields) {
     if (!err) {
@@ -74,7 +78,7 @@ app.get("/getYoutubeChannels", function (req, res) {
 app.get("/getYoutubeVideos", function (req, res) {
   console.log("== GET request recieved");
 
-  query = "SELECT * FROM YouTube_Videos ORDER BY RAND() LIMIT 2;";
+  query = "SELECT * FROM YouTube_Videos ORDER BY RAND();";
 
   db.pool.query(query, function (err, results, fields) {
     if (!err) {
@@ -244,50 +248,46 @@ app.get("/", function (req, res) {
   });
 });
 
-// app.post("/updateLeaderboardData", function (req, res) {
-//   console.log("== Post request recieved");
-//   score = parseInt(req.body);
+app.put("/updateLeaderboardData", function (req, res) {
+  console.log("== Put request recieved");
+  score = req.query.score;
+  gamemode = req.query.gamemode;
+  currentHighScore = 0;
 
-//   MongoClient.connect(url, function (err, db) {
-//     if (err) throw err;
-//     var dbo = db.db("CS290-Final-Project");
-//     dbo.collection("data").findOne({}, function (err, result) {
-//       if (err) throw err;
+  getQuery =
+    "SELECT highScore FROM High_Scores WHERE userID = 0 AND gameMode = '" +
+    gamemode +
+    "';";
 
-//       var leaderboard = result.leaderboard;
+  updateQuery =
+    "UPDATE High_Scores SET highScore = " +
+    score +
+    " WHERE userID = 0 AND gameMode = '" +
+    gamemode +
+    "';";
 
-//       leaderboard.sort(function (a, b) {
-//         return a - b;
-//       });
-//       var minValue = leaderboard[0];
+  db.pool.query(getQuery, function (err, results, fields) {
+    if (!err) {
+      const result = Object.values(JSON.parse(JSON.stringify(results)));
+      currentHighScore = parseInt(result[0].highScore);
 
-//       if (score > minValue || leaderboard.length < 10) {
-//         if (leaderboard.length >= 10) {
-//           leaderboard.shift(); // removes the first element
-//         }
-//         leaderboard.push(score);
-//         leaderboard.sort(function (a, b) {
-//           return a - b;
-//         });
-
-//         var myobj = { dataType: "Leaderboard", leaderboard: leaderboard };
-//         dbo
-//           .collection("data")
-//           .updateOne(
-//             { dataType: "Leaderboard" },
-//             { $set: myobj },
-//             function (err, res) {
-//               if (err) throw err;
-//               console.log("1 document updated");
-//               db.close();
-//             }
-//           );
-//       } else {
-//         db.close();
-//       }
-//     });
-//   });
-// });
+      if (score > currentHighScore) {
+        db.pool.query(updateQuery, function (err, results, fields) {
+          if (!err) {
+            res.status(200);
+            res.end();
+          } else {
+            res.status(500).send("Error storing in database.");
+          }
+        });
+      }
+      res.status(200);
+      res.end();
+    } else {
+      res.status(500).send("Error storing in database.");
+    }
+  });
+});
 
 // app.post("/getData", function (req, res) {
 //   console.log("== Post request recieved");
