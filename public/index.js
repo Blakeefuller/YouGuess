@@ -1,8 +1,9 @@
-var videosArray;
+var channelsArray;
 
-var viewsOne;
-var viewsTwo;
+var subsOne;
+var subsTwo;
 
+// sends request to server to attain high scores values and displays them in the leaderboard
 function getLeaderboardData() {
   var leaderboardContainer = document.getElementsByClassName(
     "leaderboard-data-container"
@@ -32,6 +33,7 @@ function getLeaderboardData() {
   request.send();
 }
 
+// sends a request server to potentially update high score
 function updateLeaderboard(score) {
   var request = new XMLHttpRequest();
   request.open(
@@ -41,10 +43,10 @@ function updateLeaderboard(score) {
   request.send();
 }
 
+// gets a random youtube channel
 function getRandYoutuber(channelsArray) {
   if (channelsArray.length == 0) {
     console.log("== We're out of YouTube channels.");
-    // call api to get new channel
   }
 
   var randInt = Math.floor(Math.random() * channelsArray.length); // pick rand number from array length
@@ -55,6 +57,7 @@ function getRandYoutuber(channelsArray) {
   return channel;
 }
 
+// replaces one of the youtubers with another one
 function replaceYoutuber(channelsArray, youtuberNum) {
   channel = getRandYoutuber(channelsArray);
 
@@ -67,15 +70,16 @@ function replaceYoutuber(channelsArray, youtuberNum) {
   info.textContent = channel.name;
 
   if (youtuberNum == 1) {
-    viewsOne = channel.numSubscribers;
+    subsOne = channel.numSubscribers;
     document.getElementById("youtuber-1-subs").innerText = "";
   } else {
-    viewsTwo = channel.numSubscribers;
+    subsTwo = channel.numSubscribers;
     document.getElementById("youtuber-2-subs").innerText = "";
   }
 }
 
-function newVideos() {
+// gets two channels and dispplays them
+function newChannels() {
   console.log("== Getting new YouTubers now.");
   var request = new XMLHttpRequest();
 
@@ -96,14 +100,14 @@ function newVideos() {
       imageOne.src = channelOne.channelPhotoUrl;
       infoOne = infoContainers[0].getElementsByTagName("p")[0]; // Get Youtuber name
       infoOne.textContent = channelOne.name;
-      viewsOne = channelOne.numSubscribers;
+      subsOne = channelOne.numSubscribers;
       document.getElementById("youtuber-1-subs").innerText = "";
 
       imageTwo = imageContainers[1].getElementsByTagName("img")[0]; // Get thumbnail
       imageTwo.src = channelTwo.channelPhotoUrl;
       infoTwo = infoContainers[1].getElementsByTagName("p")[0]; // Get Youtuber name
       infoTwo.textContent = channelTwo.name;
-      viewsTwo = channelTwo.numSubscribers;
+      subsTwo = channelTwo.numSubscribers;
       document.getElementById("youtuber-2-subs").innerText = "";
     }
   };
@@ -112,13 +116,14 @@ function newVideos() {
   request.send();
 }
 
+// fills the channel array
 function fillChannelsArray() {
   var request = new XMLHttpRequest();
 
   request.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       jsonObj = JSON.parse(this.responseText);
-      videosArray = jsonObj;
+      channelsArray = jsonObj;
     }
   };
 
@@ -127,7 +132,7 @@ function fillChannelsArray() {
 }
 
 fillChannelsArray();
-newVideos();
+newChannels();
 
 //game over modal stuff
 var modal = document.getElementById("game-over-modal");
@@ -140,7 +145,7 @@ modalPlayAgainButton.onclick = function modalClose(event) {
   answerStreak[0].textContent = 0;
   answerStreak[1].textContent = 0;
   modal.classList.add("hidden");
-  newVideos(videosArray);
+  newChannels(channelsArray);
 };
 
 modalCloseButton.onclick = function modalClose(event) {
@@ -148,28 +153,28 @@ modalCloseButton.onclick = function modalClose(event) {
 };
 
 //youtuber buttons
-var video1 = document.getElementById("youtuber-1");
-var video2 = document.getElementById("youtuber-2");
+var channel1 = document.getElementById("youtuber-1");
+var channel2 = document.getElementById("youtuber-2");
 
-var videos = document
+var channels = document
   .getElementById("guess-section")
   .getElementsByClassName("youtuber");
-console.log("youtubers", videos);
+console.log("youtubers", channels);
 
-var video1Views = videos[0].getAttribute("subCount");
-var video2Views = videos[1].getAttribute("subCount");
+var channel1Subs = channels[0].getAttribute("subCount");
+var channel2Subs = channels[1].getAttribute("subCount");
 
 //leaderboard
 getLeaderboardData();
 
-video1.onclick = function modalDisplay(event) {
-  console.log("youtuber 1 subs:", video1Views);
+channel1.onclick = function modalDisplay(event) {
+  console.log("youtuber 1 subs:", channel1Subs);
   console.log("streak:", answerStreak[0].textContent);
 
-  if (parseInt(viewsOne) >= parseInt(viewsTwo)) {
-    replaceYoutuber(videosArray, 2);
+  if (parseInt(subsOne) >= parseInt(subsTwo)) {
+    replaceYoutuber(channelsArray, 2);
     document.getElementById("youtuber-1-subs").innerText =
-      parseInt(viewsOne).toLocaleString("en-US");
+      parseInt(subsOne).toLocaleString("en-US");
     console.log("correct youtuber 1 has more subs streak increased");
     var streakValue = parseInt(answerStreak[0].textContent);
     streakValue = streakValue + 1;
@@ -179,9 +184,9 @@ video1.onclick = function modalDisplay(event) {
     console.log("== You lose...");
     updateLeaderboard(parseInt(answerStreak[0].textContent));
     document.getElementById("youtuber-1-subs").innerText =
-      parseInt(viewsOne).toLocaleString("en-US");
+      parseInt(subsOne).toLocaleString("en-US");
     document.getElementById("youtuber-2-subs").innerText =
-      parseInt(viewsTwo).toLocaleString("en-US");
+      parseInt(subsTwo).toLocaleString("en-US");
     // Show losing screen
     if (modal.classList.contains("hidden")) {
       modal.classList.remove("hidden");
@@ -189,14 +194,14 @@ video1.onclick = function modalDisplay(event) {
   }
 };
 
-video2.onclick = function modalDisplay(event) {
-  console.log("youtuber 2 subs:", video2Views);
+channel2.onclick = function modalDisplay(event) {
+  console.log("youtuber 2 subs:", channel2Subs);
   console.log("streak:", answerStreak[0].textContent);
 
-  if (parseInt(viewsOne) <= parseInt(viewsTwo)) {
-    replaceYoutuber(videosArray, 1);
+  if (parseInt(subsOne) <= parseInt(subsTwo)) {
+    replaceYoutuber(channelsArray, 1);
     document.getElementById("youtuber-2-subs").innerText =
-      parseInt(viewsTwo).toLocaleString("en-US");
+      parseInt(subsTwo).toLocaleString("en-US");
     var streakValue = parseInt(answerStreak[0].textContent);
     streakValue = streakValue + 1;
     answerStreak[0].textContent = streakValue;
@@ -205,9 +210,9 @@ video2.onclick = function modalDisplay(event) {
     console.log("== You lose...");
     updateLeaderboard(parseInt(answerStreak[0].textContent));
     document.getElementById("youtuber-1-subs").innerText =
-      parseInt(viewsOne).toLocaleString("en-US");
+      parseInt(subsOne).toLocaleString("en-US");
     document.getElementById("youtuber-2-subs").innerText =
-      parseInt(viewsTwo).toLocaleString("en-US");
+      parseInt(subsTwo).toLocaleString("en-US");
     // Show losing screen
     if (modal.classList.contains("hidden")) {
       modal.classList.remove("hidden");

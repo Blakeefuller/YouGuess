@@ -3,8 +3,6 @@ const fs = require("fs");
 const assert = require("assert");
 const bodyParser = require("body-parser");
 
-var youtubeChannels = require("./public/youtubeChannels.json");
-
 /*
     SETUP
 */
@@ -13,7 +11,7 @@ var app = express(); // We need to instantiate an express object to interact wit
 app.use(express.json());
 app.use(bodyParser.text());
 app.use(express.static("public"));
-PORT = 62334; // Set a port number at the top so it's easy to change in the future
+PORT = 61691; // Set a port number at the top so it's easy to change in the future
 
 // Database
 var db = require("./public/db-connector.js");
@@ -34,6 +32,7 @@ app.listen(PORT, function () {
     ROUTES
 */
 
+// gets the 10 highest high scores
 app.get("/getLeaderboardData", function (req, res) {
   console.log("== GET request recieved");
   gamemode = req.query.gamemode;
@@ -49,6 +48,7 @@ app.get("/getLeaderboardData", function (req, res) {
 
       let scores = [];
       for (let i = 0; i < result.length; i++) {
+        //adds all high scores to the scores array
         scores[i] = result[i].highScore;
       }
 
@@ -59,6 +59,7 @@ app.get("/getLeaderboardData", function (req, res) {
   });
 });
 
+// gets all youtube channels in the database in a random order
 app.get("/getYoutubeChannels", function (req, res) {
   console.log("== GET request recieved");
 
@@ -75,6 +76,7 @@ app.get("/getYoutubeChannels", function (req, res) {
   });
 });
 
+// gets all youtube videos in the database in a random order
 app.get("/getYoutubeVideos", function (req, res) {
   console.log("== GET request recieved");
 
@@ -92,6 +94,7 @@ app.get("/getYoutubeVideos", function (req, res) {
   });
 });
 
+// gets all friends of a user based on their userID
 app.get("/getFriends", function (req, res) {
   console.log("== GET request recieved");
   userID = req.query.userID;
@@ -113,6 +116,7 @@ app.get("/getFriends", function (req, res) {
   });
 });
 
+// gets all items quantites of a user based on their userID
 app.get("/getItems", function (req, res) {
   console.log("== GET request recieved");
 
@@ -135,6 +139,7 @@ app.get("/getItems", function (req, res) {
   });
 });
 
+// deletes a friend of a user based on their userID's
 app.delete("/deleteFriend", function (req, res) {
   friendName = req.query.friendName;
 
@@ -158,6 +163,7 @@ app.delete("/deleteFriend", function (req, res) {
   });
 });
 
+// updates the item quantities of a user if 2 values are provided
 app.put("/updateItems", function (req, res) {
   skipQuantity = req.query.skipQuantity;
   reviveQuantity = req.query.reviveQuantity;
@@ -196,6 +202,7 @@ app.put("/updateItems", function (req, res) {
   }
 });
 
+// adds a friend based on their userID's
 app.post("/addFriend", function (req, res) {
   console.log("== POST request recieved");
 
@@ -221,33 +228,8 @@ app.post("/addFriend", function (req, res) {
   });
 });
 
-app.get("/", function (req, res) {
-  // Define our queries
-  query1 = "DROP TABLE IF EXISTS diagnostic;";
-  query2 =
-    "CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);";
-  query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
-  query4 = "SELECT * FROM diagnostic;";
-
-  // Execute every query in an asynchronous manner, we want each query to finish before the next one starts
-
-  // DROP TABLE...
-  db.pool.query(query1, function (err, results, fields) {
-    // CREATE TABLE...
-    db.pool.query(query2, function (err, results, fields) {
-      // INSERT INTO...
-      db.pool.query(query3, function (err, results, fields) {
-        // SELECT *...
-        db.pool.query(query4, function (err, results, fields) {
-          // Send the results to the browser
-          let base = "<h1>MySQL Results:</h1>";
-          res.send(base + JSON.stringify(results));
-        });
-      });
-    });
-  });
-});
-
+// updates leaderboard data by first getting the current high score of a user
+// and then compares it to the score that was just attained
 app.put("/updateLeaderboardData", function (req, res) {
   console.log("== Put request recieved");
   score = req.query.score;
@@ -288,22 +270,3 @@ app.put("/updateLeaderboardData", function (req, res) {
     }
   });
 });
-
-// app.post("/getData", function (req, res) {
-//   console.log("== Post request recieved");
-
-//   youtubeChannels = youtubeChannels.concat(req.body);
-//   fs.writeFile(
-//     __dirname + "/public/youtubeChannels.json",
-//     JSON.stringify(youtubeChannels, null, 2),
-//     function (err) {
-//       if (!err) {
-//         res
-//           .status(200)
-//           .send("Data successfully written to youtubeChannels.json");
-//       } else {
-//         res.status(500).send("Error storing in database.");
-//       }
-//     }
-//   );
-// });

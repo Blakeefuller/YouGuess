@@ -3,6 +3,7 @@ var videosArray;
 var viewsOne;
 var viewsTwo;
 
+// sends request to server to attain high scores values and displays them in the leaderboard
 function getLeaderboardData() {
   var leaderboardContainer = document.getElementsByClassName(
     "leaderboard-data-container"
@@ -32,6 +33,7 @@ function getLeaderboardData() {
   request.send();
 }
 
+// sends a request server to potentially update high score
 function updateLeaderboard(score) {
   var request = new XMLHttpRequest();
   request.open(
@@ -41,6 +43,7 @@ function updateLeaderboard(score) {
   request.send();
 }
 
+// gets a random youtube video
 function getRandVideo(videosArray) {
   if (videosArray.length == 0) {
     console.log("== We're out of YouTube videos.");
@@ -55,6 +58,7 @@ function getRandVideo(videosArray) {
   return video;
 }
 
+// replaces one of the videos with another one
 function replaceVideo(videosArray, videoNum) {
   video = getRandVideo(videosArray);
 
@@ -75,6 +79,7 @@ function replaceVideo(videosArray, videoNum) {
   }
 }
 
+// gets two videos and dispplays them
 function newVideos() {
   console.log("== Getting new videos now.");
   var request = new XMLHttpRequest();
@@ -110,6 +115,7 @@ function newVideos() {
   request.send();
 }
 
+// fills the video array
 function fillVideosArray() {
   var request = new XMLHttpRequest();
 

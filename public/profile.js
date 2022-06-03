@@ -1,3 +1,5 @@
+// displays all friends of a user along with a button next to each friend
+// that is used to delete the particular friend after sending a request to the server
 function getFriends(userID) {
   var friendsContainer = document.getElementsByClassName(
     "friendslist-data-container"
@@ -36,6 +38,8 @@ function getFriends(userID) {
   request.send();
 }
 
+// displays all item quantities of a user along with a field used to update
+// the quantitiy of the particular item after sending a request to the server
 function getItems(userID) {
   var itemsContainer = document.getElementsByClassName("Items-data-container");
 
@@ -67,6 +71,7 @@ function getItems(userID) {
   request.send();
 }
 
+// sends a request to the server to update item quantites
 function updateItems() {
   var itemsContainer = document.getElementsByClassName("Items-data-container");
   var list = itemsContainer[0].getElementsByTagName("li");
@@ -84,6 +89,7 @@ function updateItems() {
   request.send();
 }
 
+// sends a request to the server to add a friend
 function addFriend() {
   var addFriendsContainer = document.getElementsByClassName(
     "addFriends-container"
