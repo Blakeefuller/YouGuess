@@ -44,7 +44,6 @@ function updateLeaderboard(score) {
 function getRandVideo(videosArray) {
   if (videosArray.length == 0) {
     console.log("== We're out of YouTube videos.");
-    // call api to get new video
   }
 
   var randInt = Math.floor(Math.random() * videosArray.length); // pick rand number from array length

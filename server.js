@@ -288,22 +288,3 @@ app.put("/updateLeaderboardData", function (req, res) {
     }
   });
 });
-
-// app.post("/getData", function (req, res) {
-//   console.log("== Post request recieved");
-
-//   youtubeChannels = youtubeChannels.concat(req.body);
-//   fs.writeFile(
-//     __dirname + "/public/youtubeChannels.json",
-//     JSON.stringify(youtubeChannels, null, 2),
-//     function (err) {
-//       if (!err) {
-//         res
-//           .status(200)
-//           .send("Data successfully written to youtubeChannels.json");
-//       } else {
-//         res.status(500).send("Error storing in database.");
-//       }
-//     }
-//   );
-// });
